@@ -1,0 +1,40 @@
+.App {
+  display: flex;
+  height: 100vh; /* Adjust the height as needed */
+}
+
+.login-section {
+  flex: 2;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.signUp-section {
+  flex: 3;
+  padding: 20px;
+}
+
+.left-section {
+  flex: 2;
+  background-color: #ff0000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.right-section {
+  flex: 3;
+  background-color: #fafafa;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.imageStyle {
+  margin-right: 10px;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Add any additional styles for center alignment */
+}
