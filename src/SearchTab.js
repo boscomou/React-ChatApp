@@ -63,9 +63,9 @@ function SearchTab() {
               uid: user.uid,
               username: user.username,
               photoURL: user.photoURL,
-              [combinedId + ".lastMessage"]: null,
             },
             [combinedId + ".date"]: serverTimestamp(),
+            [combinedId + ".lastMessage"]: null,
           });}
           catch(err){
             console.log(err)
