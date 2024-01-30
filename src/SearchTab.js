@@ -3,6 +3,7 @@ import { collection, query, where } from "firebase/firestore";
 import { db, auth, storage } from './config/firebase';
 import { getDocs,  addDoc, deleteDoc, updateDoc, doc, getDoc,setDoc, serverTimestamp } from 'firebase/firestore'
 import { CurrentUserDataContext } from "./CurrentUserDataContext";
+import { SelectedChatContext } from "./SelectedChatContext";
 
 import './SearchTab.css';
 
@@ -12,6 +13,7 @@ function SearchTab() {
   const [err, setErr] = useState(false);
 
   const { currentUserData, setCurrentUserData } = useContext(CurrentUserDataContext);
+  
 
 
   const handleSearch = async () => {
@@ -81,6 +83,7 @@ function SearchTab() {
             [combinedId + ".date"]: serverTimestamp(),
             [combinedId + ".lastMessage"]: null,
           });
+
         }
       } catch (err) {}
   

@@ -3,7 +3,7 @@ import { SelectedChatRoomContext } from "./SelectedChatRoomContext"
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from './config/firebase';
 import { CurrentUserDataContext } from './CurrentUserDataContext';
-
+import { SelectedChatContext } from './SelectedChatContext';
 
   function ConversationTab() {
 
@@ -11,7 +11,7 @@ import { CurrentUserDataContext } from './CurrentUserDataContext';
   const [chatList, setChatList] = useState([]);
 
   const {currentUserData} =  useContext(CurrentUserDataContext)
-
+  const { dispatch } = useContext(SelectedChatContext);
   
   useEffect(() => {
     const getChats = () => {
@@ -61,6 +61,7 @@ import { CurrentUserDataContext } from './CurrentUserDataContext';
             setSelectedChatRoom(
               user
             )
+            dispatch({type:"CHANGE_USER",payload: user[1].userInfo})
           
           }
         }

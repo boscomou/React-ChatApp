@@ -6,8 +6,9 @@ import { SelectedChatRoomContext } from './SelectedChatRoomContext';
 import { useState } from 'react';
 import FirebaseTest from './FirebaseTest';
 import LoginAndSignUpScreen from './LoginAndSignUpScreen';
-import { CurrentUserDataContext } from './CurrentUserDataContext';
+import { CurrentUserDataContext } from './CurrentUserDataContext'
 import Down from "./Down"
+import { ChatContextProvider } from './SelectedChatContext';
 
 function App() {
 
@@ -18,11 +19,13 @@ function App() {
     <BrowserRouter>
       <CurrentUserDataContext.Provider value={{currentUserData, setCurrentUserData}}>
       <SelectedChatRoomContext.Provider value={{ selectedChatRoom, setSelectedChatRoom }}>
+        <ChatContextProvider>
         <Routes>
           <Route path="/" element={<LoginAndSignUpScreen/>} />
           <Route path="/Home" element={<Home/>}></Route>
           <Route path="/Down" element={<Down/>}></Route>
         </Routes>
+        </ChatContextProvider>
       </SelectedChatRoomContext.Provider>
       </CurrentUserDataContext.Provider>
     </BrowserRouter>

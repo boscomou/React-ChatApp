@@ -2,22 +2,27 @@ import React, { useContext, useState, useEffect } from 'react'
 import { CurrentUserDataContext } from './CurrentUserDataContext'
 import { SelectedChatRoomContext } from './SelectedChatRoomContext'
 import { v4 as uuid } from "uuid";
-import { db, storage } from './config/firebase';
+import { db, storage} from './config/firebase';
 import {
   arrayUnion,
   doc,
   serverTimestamp,
   Timestamp,
   updateDoc,
-  onSnapshot
+  onSnapshot,
+  collection,
+  setDoc,
+
 } from "firebase/firestore";
 import "./ChatTab.css"
+import { SelectedChatContext } from './SelectedChatContext';
 
 function ChatTab() {
   const { selectedChatRoom } = useContext(SelectedChatRoomContext)
   const { currentUserData } = useContext(CurrentUserDataContext)
   const [inputText, setInputText] = useState("")
   const [messages, setMessages] = useState([]);
+  const { data } = useContext(SelectedChatContext);
 
 
   const updateChats = async () => {
@@ -30,8 +35,8 @@ function ChatTab() {
       }),
     });
     
-    await updateDoc(doc(db,"userChats",selectedChatRoom && selectedChatRoom[0]),{
-      
+    await updateDoc(doc(db,"userChats",currentUserData.uid,"boV5Dlf62TPttVZ66xfB1vDRaao2NgdgaYNeXoSa46TB6ww8ZU8RfRJ3"),{
+      lastMessage: "hi"
     })
   }
 
@@ -81,6 +86,13 @@ function ChatTab() {
         console.log(message.text);
         return <p class="message-box">{message.text}</p>;
       })}
+
+      <div>
+        {data.chatId}
+        <br></br>
+        {data.user.uid}
+        {console.log(data.user.uid)}
+      </div>
       </div>
     </div>
   )
