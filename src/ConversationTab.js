@@ -1,6 +1,6 @@
 import React, {useContext,useState,useEffect} from 'react';
 import { SelectedChatRoomContext } from "./SelectedChatRoomContext"
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot,getDocs,query,where } from "firebase/firestore";
 import { db } from './config/firebase';
 import { CurrentUserDataContext } from './CurrentUserDataContext';
 import { SelectedChatContext } from './SelectedChatContext';
@@ -14,13 +14,25 @@ import { SelectedChatContext } from './SelectedChatContext';
   const { dispatch } = useContext(SelectedChatContext);
   
   useEffect(() => {
-    const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats",currentUserData?.uid), (doc) => {
-        setChatList(doc.data());
-      });
+    const getChats = async () => {
 
+      const q = query(collection(db, "userChats",currentUserData?.uid,"userChatCollection"))
+
+      const unsub= onSnapshot(q, (querySnapshot) => {
+        console.log(querySnapshot)
+        const chats = [];
+        querySnapshot.forEach((doc) => {
+            chats.push(doc.data());
+        });
+    
+        setChatList(chats)
+      });
+  
+      
+      
       return () => {
         unsub();
+        
       };
     };
 
@@ -46,9 +58,11 @@ import { SelectedChatContext } from './SelectedChatContext';
     
     <div>
    
-        {Object.entries(chatList)?.map((user) => (
+        {chatList?.map((user) => (
+          
+            
           <a
-          key={user[1].userInfo.username}
+          key={user.userInfo.username}
           style={
             { 
               textDecoration: 'none', 
@@ -61,7 +75,8 @@ import { SelectedChatContext } from './SelectedChatContext';
             setSelectedChatRoom(
               user
             )
-            dispatch({type:"CHANGE_USER",payload: user[1].userInfo})
+            console.log(selectedChatRoom)
+            dispatch({type:"CHANGE_USER",payload: user.userInfo})
           
           }
         }
@@ -75,17 +90,19 @@ import { SelectedChatContext } from './SelectedChatContext';
               cursor: 'pointer',
               width: '100%', // Added style to fill maximum width
               boxSizing: 'border-box', // Added style to include padding in width calculation
-              background: selectedChatRoom && selectedChatRoom[1].userInfo.username === user[1].userInfo.username ? 'lightblue' :'blue'
+              background: selectedChatRoom && selectedChatRoom.userInfo.username === user.userInfo.username ? 'lightblue' :'blue'
             }}
           >
             <div style={{ marginRight: '10px' }}>
-              <span>{user[1].userInfo.username}</span>
-              <span style={{ display: 'block' }}>{user[1].lastMessage?.text}</span>
+              
+              <span>{user.userInfo.username}</span>
+              {console.log(user)}
+              <span style={{ display: 'block' }}>{user.lastMessage}</span>
             </div>
             <div style={{ marginLeft: 'auto' }}>
               
-              {/* <span>{user[1].userInfo.username}</span> */}
-              <span>{getDateAndTime(user[1].date?.seconds,user[1].date?.nanoseconds)}</span>
+             
+              <span>{getDateAndTime(user.date?.seconds,user.date?.nanoseconds)}</span>
             </div>
           </div>
         </a>

@@ -60,29 +60,51 @@ function SearchTab() {
   
           //create user chats
           try{
-          await updateDoc(doc(db, "userChats", currentUserData.uid), {
-            [combinedId + ".userInfo"]: {
-              uid: user.uid,
-              username: user.username,
-              photoURL: user.photoURL,
-            },
-            [combinedId + ".date"]: serverTimestamp(),
-            [combinedId + ".lastMessage"]: null,
-          });}
+
+          const chatCollectionRef = collection(doc(db, "userChats", currentUserData.uid), "userChatCollection");
+
+          await setDoc(doc(chatCollectionRef,combinedId ), {
+           
+              userInfo: {
+                uid: user.uid,
+                username: user.username,
+                photoURL: user.photoURL,
+              },
+              date: serverTimestamp(),
+            lastMessage: null,
+            
+          });
+          
+        
+        }
           catch(err){
             console.log(err)
 
           }
   
-          await updateDoc(doc(db, "userChats", user.uid), {
-            [combinedId + ".userInfo"]: {
-              uid: currentUserData.uid,
-              username: currentUserData.username,
-              photoURL: currentUserData.photoURL,
-            },
-            [combinedId + ".date"]: serverTimestamp(),
-            [combinedId + ".lastMessage"]: null,
-          });
+          try{
+
+            const chatCollectionRef = collection(doc(db, "userChats", user.uid), "userChatCollection");
+  
+            await setDoc(doc(chatCollectionRef,combinedId ), {
+             
+                userInfo: {
+                  uid:currentUserData.uid,
+                  username: currentUserData.username,
+                  photoURL: currentUserData.photoURL,
+                },
+                date: serverTimestamp(),
+              lastMessage: null,
+              
+            });
+            
+          
+          }
+            catch(err){
+              console.log(err)
+  
+            }
+    
 
         }
       } catch (err) {}

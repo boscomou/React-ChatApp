@@ -12,6 +12,7 @@ import {
   onSnapshot,
   collection,
   setDoc,
+  addDoc
 
 } from "firebase/firestore";
 import "./ChatTab.css"
@@ -26,7 +27,7 @@ function ChatTab() {
 
 
   const updateChats = async () => {
-    await updateDoc(doc(db, "chats", selectedChatRoom && selectedChatRoom[0]), {
+    await updateDoc(doc(db, "chats", data && data.chatId), {
       messages: arrayUnion({
         id: uuid(),
         text: inputText,
@@ -34,16 +35,23 @@ function ChatTab() {
         date: Timestamp.now(),
       }),
     });
-    
-    await updateDoc(doc(db,"userChats",currentUserData.uid,"boV5Dlf62TPttVZ66xfB1vDRaao2NgdgaYNeXoSa46TB6ww8ZU8RfRJ3"),{
-      lastMessage: "hi"
+    const chatCollectionCurrentUserRef = collection(doc(db, "userChats", currentUserData.uid), "userChatCollection");
+    await updateDoc(doc(chatCollectionCurrentUserRef,data.chatId),{
+      lastMessage: inputText,
+      date: Timestamp.now(),
+    })
+
+    const chatCollectionDataUserRef = collection(doc(db, "userChats", data.user.uid), "userChatCollection");
+    await updateDoc(doc(chatCollectionDataUserRef,data.chatId),{
+      lastMessage: inputText,
+      date: Timestamp.now(),
     })
   }
 
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, "chats",  selectedChatRoom[0]), (doc) => {
+      const unsub = onSnapshot(doc(db, "chats",  data && data.chatId), (doc) => {
         doc.exists() && setMessages(doc.data().messages);
       })
 
@@ -53,48 +61,93 @@ function ChatTab() {
 
     };
     currentUserData?.uid && getChats();
-  }, [selectedChatRoom && selectedChatRoom[0]]);
+  }, [data && data.chatId]);
 
   return (
-    <div>
-
-      <div>
-
-        <input
-          type="text"
-          placeholder="Type something..."
-          onChange={(e) => setInputText(e.target.value)}
-          value={inputText}
-        />
-      </div>
-
-      <div>
-      <button onClick={updateChats}>send</button>
-  
-      </div>
-
-      
-  <div class="messages">
-    <div class="messages-content"></div>
-  </div>
-  {/* <div class="message-box">
-    <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
-    </div> */}
-
-      <div>
-      {messages.map((message) => {
-        console.log(message.text);
-        return <p class="message-box">{message.text}</p>;
-      })}
-
-      <div>
-        {data.chatId}
-        <br></br>
-        {data.user.uid}
-        {console.log(data.user.uid)}
-      </div>
-      </div>
+    <div class="chat-box">
+  <div class="header">
+    <div class="avatar-wrapper avatar-big">
+      <img src={data.user.photoURL} alt="avatar" />
     </div>
+    <span class="name">{data.user.username}</span>
+    <span class="options">
+      <i class="fas fa-ellipsis-h"></i>
+    </span>
+  </div>
+  
+  <div class="scrollable-container">
+  <div class="scrollable-content">
+  <div class="chat-room">
+    {messages.map((message) =>
+      {
+        {console.log(message)}
+        if(message.senderId === currentUserData.uid){
+          return(
+            <div class="message message-right">
+            <div class="avatar-wrapper avatar-small">
+            <img src={currentUserData.photoURL}/> 
+          </div>
+          <div class="bubble bubble-dark">
+            {message.text}
+          </div>
+        </div>
+          )
+        }
+
+        else{
+          return(
+          <div class="message message-left">
+          <div class="avatar-wrapper avatar-small">
+            <img src={data.user.photoURL}/> 
+          </div>
+          <div class="bubble bubble-light">
+          {message.text}
+          </div>
+        </div>
+          )
+        }
+     }
+    )
+    }
+
+  </div>
+  </div>
+  </div>
+
+  <div class="type-area">
+    <div class="input-wrapper">
+      <input type="text" id="inputText" onChange={(e) => setInputText(e.target.value)} placeholder="Type messages here..." />
+    </div>
+    {/* <span class="button-add">
+      <i class="fas fa-plus-circle"></i>
+      <div class="others">
+        <span class="emoji-button">
+          <i class="far fa-laugh"></i>
+          <div class="emoji-box">
+            <span>&#x1f604;</span>
+            <span>😀</span>
+            <span>😂</span>
+            <span>😭</span>
+            <span>😍</span>
+            <span>🤮</span>
+            <span>🤑</span>
+            <span>😖</span>
+            <span>😷</span>
+          </div>
+        </span>
+        <span class="image-button">
+          <i class="far fa-image"></i>
+        </span>
+        <span>
+          <i class="fas fa-paperclip"></i>
+        </span>
+      </div>
+    </span> */}
+    <button onClick={updateChats} class="button-fileSend">file</button>
+    <button onClick={updateChats} class="button-send">Send</button>
+  </div>
+
+</div>
   )
 }
 

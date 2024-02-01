@@ -44,8 +44,9 @@ img {
     overflow: hidden;
 }
 .chat-box {
-    width: 350px;
+
     margin: auto;
+
 }
 .chat-box .header {
     display: flex;
@@ -70,7 +71,8 @@ img {
     cursor: pointer;
 }
 .chat-box .chat-room {
-    min-height: 300px;
+
+   height: 70vh;
     background-color: #f7f9fb;
     padding: 15px;
 }
@@ -113,18 +115,25 @@ img {
     height: 65px;
     background-color: #fff;
     border-radius: 0 0 20px 20px;
+
+
+    flex-direction: row;
+    justify-content: flex-end;
 }
 .chat-box .type-area .input-wrapper {
     overflow: hidden;
     border-radius: 0 0 0 20px;
+    margin-right: auto;
 }
 .chat-box .type-area .input-wrapper input {
     outline: none;
     border: none;
     padding-left: 20px;
     height: 100%;
-    width: 220px;
+    width: 100%;
     font-size: 14px;
+    margin-right: auto;
+    
 }
 .chat-box .type-area .button-add {
     display: flex;
@@ -178,9 +187,22 @@ img {
     width: 20px;
     height: 20px;
 }
+.chat-box .type-area .button-fileSend {
+    background-color: #fff;
+
+    width: 65px;
+    color: #be79df;
+    font-weight: bold;
+    border-left: 2px solid #f7f9fb;
+
+}
+.chat-box .type-area .button-fileSend:hover {
+    background-color: #be79df;
+    color: #fff;
+}
 .chat-box .type-area .button-send {
     background-color: #fff;
-    margin-left: auto;
+   
     width: 65px;
     color: #be79df;
     font-weight: bold;
@@ -191,3 +213,15 @@ img {
     background-color: #be79df;
     color: #fff;
 }
+
+.scrollable-container {
+ 
+     /* Set the height of the container */
+    overflow: auto; /* Enable scrollbars when needed */
+  }
+  
+  .scrollable-content {
+    /* Set the size of the content */
+    width: 100%;
+    height: 100%;
+  }
