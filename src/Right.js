@@ -2,6 +2,8 @@ import React from 'react'
 import SearchTab from './SearchTab'
 import ChatTab from './ChatTab'
 import UserTag from './UserTag'
+import './Right.css';
+
 
 
 function Right() {
@@ -9,17 +11,14 @@ function Right() {
   
 
   return (
-    <div>
+    <div className="rightScreen" >
 
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <button>Logout</button>
       </div>
 
-      <div style={{ padding: '10px' }} >
-        <UserTag />
-      </div>
 
-      <div style={{ padding: '10px' }} >
+      <div style={{ padding: '10px',flex:1,overflow:'hidden'}} >
         <ChatTab />
       </div>
     </div>

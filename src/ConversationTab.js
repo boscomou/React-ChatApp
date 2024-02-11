@@ -19,7 +19,7 @@ import { SelectedChatContext } from './SelectedChatContext';
       const q = query(collection(db, "userChats",currentUserData?.uid,"userChatCollection"))
 
       const unsub= onSnapshot(q, (querySnapshot) => {
-        console.log(querySnapshot)
+  
         const chats = [];
         querySnapshot.forEach((doc) => {
             chats.push(doc.data());
@@ -75,7 +75,7 @@ import { SelectedChatContext } from './SelectedChatContext';
             setSelectedChatRoom(
               user
             )
-            console.log(selectedChatRoom)
+
             dispatch({type:"CHANGE_USER",payload: user.userInfo})
           
           }
@@ -93,11 +93,10 @@ import { SelectedChatContext } from './SelectedChatContext';
               background: selectedChatRoom && selectedChatRoom.userInfo.username === user.userInfo.username ? 'lightblue' :'blue'
             }}
           >
-            <div style={{ marginRight: '10px' }}>
+            <div style={{ marginRight: '10px',  maxWidth:"100%" }}>
               
               <span>{user.userInfo.username}</span>
-              {console.log(user)}
-              <span style={{ display: 'block' }}>{user.lastMessage}</span>
+              <span style={{ display: 'block' ,    width: "100%",wordWrap: "break-word" }}>{user.lastMessage}</span>
             </div>
             <div style={{ marginLeft: 'auto' }}>
               

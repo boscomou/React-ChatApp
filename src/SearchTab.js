@@ -7,6 +7,7 @@ import { SelectedChatContext } from "./SelectedChatContext";
 
 import './SearchTab.css';
 
+
 function SearchTab() {
   const [input, setInput] = useState("")
   const [user,setUser] = useState(null)
@@ -17,15 +18,9 @@ function SearchTab() {
 
 
   const handleSearch = async () => {
-    console.log(input)
+
     const q = query(collection(db, "users"), where("username", "==", input))
 
-    if(q==null){
-    console.log("null")
-    }
-    else{
-      console.log(q)
-    }
 
     try{
     const querySnapshot = await getDocs(q);
@@ -35,7 +30,7 @@ function SearchTab() {
       setUser(doc.data())
     });}
     catch(err){
-      console.log(err)
+  
     }
 
   }

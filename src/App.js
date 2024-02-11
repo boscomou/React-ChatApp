@@ -9,16 +9,19 @@ import LoginAndSignUpScreen from './LoginAndSignUpScreen';
 import { CurrentUserDataContext } from './CurrentUserDataContext'
 import Down from "./Down"
 import { ChatContextProvider } from './SelectedChatContext';
+import { SendPhotoContext } from './SendPhotoContext';
 
 function App() {
 
   const [currentUserData, setCurrentUserData] = useState()
   const [selectedChatRoom,  setSelectedChatRoom] = useState()
+  const [sendPhoto,setSendPhoto] = useState(false)
 
   return (
     <BrowserRouter>
       <CurrentUserDataContext.Provider value={{currentUserData, setCurrentUserData}}>
       <SelectedChatRoomContext.Provider value={{ selectedChatRoom, setSelectedChatRoom }}>
+        <SendPhotoContext.Provider value={{sendPhoto,setSendPhoto}}>
         <ChatContextProvider>
         <Routes>
           <Route path="/" element={<LoginAndSignUpScreen/>} />
@@ -26,6 +29,7 @@ function App() {
           <Route path="/Down" element={<Down/>}></Route>
         </Routes>
         </ChatContextProvider>
+        </SendPhotoContext.Provider>
       </SelectedChatRoomContext.Provider>
       </CurrentUserDataContext.Provider>
     </BrowserRouter>
