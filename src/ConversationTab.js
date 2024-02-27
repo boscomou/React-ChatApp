@@ -90,7 +90,7 @@ import { SelectedChatContext } from './SelectedChatContext';
               cursor: 'pointer',
               width: '100%', // Added style to fill maximum width
               boxSizing: 'border-box', // Added style to include padding in width calculation
-              background: selectedChatRoom && selectedChatRoom.userInfo.username === user.userInfo.username ? 'lightblue' :'blue'
+              background: selectedChatRoom && selectedChatRoom.userInfo.username === user.userInfo.username ? '#fafafa' : 'lightblue'
             }}
           >
             <div style={{ marginRight: '10px',  maxWidth:"100%" }}>

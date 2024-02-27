@@ -166,9 +166,6 @@ function ChatTab() {
           <img src={data.user.photoURL} style={{width: "100%", height:"100%"}} alt="avatar" />
         </div>
         <span class="name">{data.user.username}</span>
-        <span class="options">
-          <i class="fas fa-ellipsis-h"></i>
-        </span>
       </div>
 
       <div class="scrollable-container" ref={scrollableContainerRef}>

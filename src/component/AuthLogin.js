@@ -70,13 +70,15 @@ function AuthLogin() {
 
   return (
     <div>
-      <input placeholder="Email..." onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Password..." onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={signIn}>Sign In</button>
+      <div><input placeholder="Email..." onChange={(e) => setEmail(e.target.value)} /></div>
+      <div><input placeholder="Password..." onChange={(e) => setPassword(e.target.value)} /></div>
 
+      <div>
+      <button onClick={signIn}>Sign In</button>
       <button onClick={signInWithGoogle}> Sign In With Google</button>
-      <button onClick={logout}> Sign Out</button>
-      <button> hi</button>
+      </div>
+
+      <div><button onClick={logout}> Sign Out</button> </div>
 
       <div style={{color: "red"}}>
         {errorMessage}
@@ -84,10 +86,10 @@ function AuthLogin() {
       <div style={{ margin: '10px 0' }}>
       {/* Spacer with margin */}
     </div>
-      <div>
+      {/* <div>
         {userEmail ? userEmail : "There are no sign-in credentials"}
         {userUid ? userUid : "There are no sign-in credentials"}
-      </div>
+      </div> */}
     </div>
   )
 }

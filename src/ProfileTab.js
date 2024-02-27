@@ -36,9 +36,9 @@ function ProfileTab() {
 
   return (
     <div style={containerStyle}>
-      <div>
+      <div style= {{display:"flex",alignItems:"center"}}>
         <img src={currentUserData?.photoURL} alt="Round Image" style={imageStyle} className="round-image" />
-   
+        {currentUserData?.username}
       </div>
       <div>
         <button className="right-button">setting</button>

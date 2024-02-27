@@ -14,6 +14,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { blue } from '@mui/material/colors';
 
 
+
 function SignUpScreen() {
 
     const [email, setEmail] = useState("");
@@ -67,10 +68,12 @@ function SignUpScreen() {
         <h1>Sign Up</h1>
 
         <div>
-        <input placeholder="Email..." onChange={(e) => setEmail(e.target.value)}/>
-        <input placeholder="Password..." onChange={(e) => setPassword(e.target.value)}/>
-        <input placeholder="Username..." onChange={(e) => setUsername(e.target.value)}/>
+        <div><input placeholder="Email..." onChange={(e) => setEmail(e.target.value)}/></div>
+        <div><input placeholder="Password..." onChange={(e) => setPassword(e.target.value)}/></div>
+        <div><input placeholder="Username..." onChange={(e) => setUsername(e.target.value)}/></div>
         <input type = "file" onChange={(e=>{setImageUpload(e.target.files[0])})} />
+
+        <div>
         <button onClick={uploadImage}>Upload Image</button>
         {uploading &&       <ClipLoader
         color={blue}
@@ -80,7 +83,8 @@ function SignUpScreen() {
         aria-label="Loading Spinner"
         data-testid="loader"
       />}
-        <button onClick={signUp}>Sign Up</button>
+        <button onClick={signUp} style={{marginLeft: "40px"}}>Sign Up</button>
+        </div>
         </div>
       
     </div>
