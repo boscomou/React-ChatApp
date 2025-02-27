@@ -78,7 +78,6 @@ function AuthLogin() {
       <button onClick={signInWithGoogle}> Sign In With Google</button>
       </div>
 
-      <div><button onClick={logout}> Sign Out</button> </div>
 
       <div style={{color: "red"}}>
         {errorMessage}
