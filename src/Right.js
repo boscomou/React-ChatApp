@@ -2,7 +2,7 @@ import React from 'react'
 import SearchTab from './SearchTab'
 import ChatTab from './ChatTab'
 import UserTag from './UserTag'
-import { auth, googleProvider } from 'c:/Users/bosco/Downloads/React-ChatApp-main/src/config/firebase'
+import { auth, googleProvider } from './config/firebase'
 import { signOut } from 'firebase/auth'
 import {Link, useNavigate} from "react-router-dom"
 import './Right.css';
